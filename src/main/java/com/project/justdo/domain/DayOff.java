@@ -1,15 +1,20 @@
 package com.project.justdo.domain;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.persistence.*;
 
+@Entity
 public class DayOff {
-    private static final Logger logger = LoggerFactory.getLogger(DayOff.class);
 
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private int year;
     private int dayOffTotal;
     private int remain;
+    @ManyToOne
     private Member owner;
+
+    public DayOff() {
+    }
 
     public DayOff(int year, int dayOffTotal, Member owner) {
         this.year = year;
@@ -22,5 +27,9 @@ public class DayOff {
         if (remain < dayOffCount) {
             throw new IllegalStateException("휴가가 " + remain + "일 남았습니다.");
         }
+    }
+
+    public boolean isOwner(Member owner) {
+        return this.owner.equals(owner);
     }
 }

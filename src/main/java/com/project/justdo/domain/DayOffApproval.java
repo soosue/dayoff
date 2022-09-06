@@ -1,15 +1,21 @@
 package com.project.justdo.domain;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.persistence.*;
 
+@Entity
 public class DayOffApproval {
-    private static final Logger logger = LoggerFactory.getLogger(DayOffApproval.class);
-
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @ManyToOne
     private DayOffApplication dayOffApplication;
+    @OneToOne
     private Member approver;
     private Boolean isApproval;
+
+    public DayOffApproval() {
+
+    }
 
     public DayOffApproval(DayOffApplication dayOffApplication, Member approver) {
         this.dayOffApplication = dayOffApplication;

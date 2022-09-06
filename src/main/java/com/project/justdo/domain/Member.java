@@ -1,16 +1,26 @@
 package com.project.justdo.domain;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity
 public class Member {
-    private static final Logger logger = LoggerFactory.getLogger(Member.class);
 
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
 
+    public Member() {
+    }
+
     public Member(Long id, String name) {
         this.id = id;
+        this.name = name;
+    }
+
+    public Member(String name) {
         this.name = name;
     }
 }

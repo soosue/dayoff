@@ -1,14 +1,18 @@
 package com.project.justdo.domain;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import javax.persistence.Embeddable;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
 import java.util.List;
 
+@Embeddable
 public class DayOffApprovals {
-    private static final Logger logger = LoggerFactory.getLogger(DayOffApprovals.class);
+    @OneToMany(mappedBy = "dayOffApplication")
+    private List<DayOffApproval> dayOffApprovals = new ArrayList<>();
 
-    private List<DayOffApproval> dayOffApprovals;
+    public DayOffApprovals() {
+
+    }
 
     public DayOffApprovals(List<DayOffApproval> dayOffApprovals) {
         this.dayOffApprovals = dayOffApprovals;

@@ -1,23 +1,28 @@
 package com.project.justdo.domain;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+@Entity
 public class DayOffApplication {
-    private static final Logger logger = LoggerFactory.getLogger(DayOffApplication.class);
-
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @ManyToOne
     private Member member;
+    @ManyToOne
     private DayOff dayOff;
-    private LocalDate from;
-    private LocalDate to;
+    private LocalDate fromDate;
+    private LocalDate toDate;
     private Integer dayOffCount;
+
+    @Transient
     private Approvers approvers;
+    @Embedded
     private DayOffApprovals dayOffApprovals;
+    @Embedded
     private PhoneNumber phoneNumber;
+    @OneToOne
     private Member subWorker;
     private String reason;
 
@@ -28,14 +33,17 @@ public class DayOffApplication {
     public DayOffApplication(Member member, DayOff dayOff, String from, String to, List<Member> approvers, List<DayOffApproval> dayOffApprovals, String emergencyCall, Member subWorker, String reason) {
         this.member = member;
         this.dayOff = dayOff;
-        this.from = LocalDate.parse(from);
-        this.to = LocalDate.parse(to);
-        this.dayOffCount = Integer.parseInt(String.valueOf(this.to.getDayOfMonth() - this.from.getDayOfMonth())) + 1;
+        this.fromDate = LocalDate.parse(from);
+        this.toDate = LocalDate.parse(to);
+        this.dayOffCount = Integer.parseInt(String.valueOf(this.toDate.getDayOfMonth() - this.fromDate.getDayOfMonth())) + 1;
         this.approvers = new Approvers(approvers);
         this.dayOffApprovals = new DayOffApprovals(dayOffApprovals);
         this.phoneNumber = new PhoneNumber(emergencyCall);
         this.subWorker = subWorker;
         this.reason = reason;
+    }
+
+    public DayOffApplication() {
     }
 
     public void validate() {
@@ -51,5 +59,9 @@ public class DayOffApplication {
             return;
         }
         throw new IllegalStateException("최종결재요청을 위해선 모두 승인되어야합니다.");
+    }
+
+    public Long getId() {
+        return id;
     }
 }
