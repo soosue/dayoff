@@ -11,10 +11,15 @@ public class DayOffApproval {
     private DayOffApplication dayOffApplication;
     @OneToOne
     private Member approver;
-    private Boolean isApproval;
+    private Boolean isApproved;
 
     public DayOffApproval() {
+    }
 
+    public DayOffApproval(DayOffApplication dayOffApplication, Member approver, Boolean isApproved) {
+        this.dayOffApplication = dayOffApplication;
+        this.approver = approver;
+        this.isApproved = isApproved;
     }
 
     public DayOffApproval(DayOffApplication dayOffApplication, Member approver) {
@@ -23,14 +28,18 @@ public class DayOffApproval {
     }
 
     public void approve() {
-        isApproval = Boolean.TRUE;
+        isApproved = Boolean.TRUE;
     }
 
     public void reject() {
-        isApproval = Boolean.FALSE;
+        isApproved = Boolean.FALSE;
     }
 
-    public boolean isApproval() {
-        return isApproval;
+    public boolean isApproved() {
+        return isApproved;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

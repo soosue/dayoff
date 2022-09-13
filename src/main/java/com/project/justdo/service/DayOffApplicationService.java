@@ -27,4 +27,14 @@ public class DayOffApplicationService {
 
         return dayOffApplication.getId();
     }
+
+    public DayOffApplicationDto findById(Long id) {
+        DayOffApplication doa = dayOffApplicationRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException(id + "의 연차신청서를 찾을 수 없습니다."));
+
+        //TODO 연차신청서를 볼 수 있는 사람은 누구누구가 되어야하는가?
+        // 볼 권한이 없는 경우 예외발생
+
+        return DayOffApplicationDto.from(doa);
+    }
 }

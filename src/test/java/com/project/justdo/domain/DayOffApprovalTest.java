@@ -24,7 +24,7 @@ public class DayOffApprovalTest {
         DayOffApproval dayOffApproval = new DayOffApproval(dayOffApplication, 아메리);
         dayOffApproval.approve();
 
-        assertThat(dayOffApproval.isApproval()).isTrue();
+        assertThat(dayOffApproval.isApproved()).isTrue();
     }
 
     @DisplayName("승인담당자는 연차신청서를 거절할 수 있다.")
@@ -42,7 +42,7 @@ public class DayOffApprovalTest {
         DayOffApproval dayOffApproval = new DayOffApproval(dayOffApplication, 아메리);
         dayOffApproval.reject();
 
-        assertThat(dayOffApproval.isApproval()).isFalse();
+        assertThat(dayOffApproval.isApproved()).isFalse();
     }
 
 }

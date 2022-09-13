@@ -20,6 +20,6 @@ public class DayOffApprovals {
 
     public boolean isAllApproval() {
         return dayOffApprovals.stream()
-                .allMatch(DayOffApproval::isApproval);
+                .allMatch(DayOffApproval::isApproved);
     }
 }
