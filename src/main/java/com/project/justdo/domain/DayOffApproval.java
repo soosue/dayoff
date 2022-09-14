@@ -8,6 +8,7 @@ public class DayOffApproval {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "day_off_application_id")
     private DayOffApplication dayOffApplication;
     @OneToOne
     private Member approver;

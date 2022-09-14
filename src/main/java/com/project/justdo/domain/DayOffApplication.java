@@ -2,6 +2,7 @@ package com.project.justdo.domain;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -38,6 +39,7 @@ public class DayOffApplication {
         this.dayOffCount = Integer.parseInt(String.valueOf(this.toDate.getDayOfMonth() - this.fromDate.getDayOfMonth())) + 1;
         this.approvers = new Approvers(approvers);
         this.dayOffApprovals = new DayOffApprovals(dayOffApprovals);
+//        this.dayOffApprovals = dayOffApprovals;
         this.phoneNumber = new PhoneNumber(emergencyCall);
         this.subWorker = subWorker;
         this.reason = reason;
@@ -63,5 +65,13 @@ public class DayOffApplication {
 
     public Long getId() {
         return id;
+    }
+
+    public DayOffApprovals getDayOffApprovals() {
+        return dayOffApprovals;
+    }
+
+    public void addDayOffApproval(DayOffApproval dayOffApproval) {
+        dayOffApprovals.add(dayOffApproval);
     }
 }

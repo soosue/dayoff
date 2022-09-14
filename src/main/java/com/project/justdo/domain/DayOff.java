@@ -11,6 +11,7 @@ public class DayOff {
     private int dayOffTotal;
     private int remain;
     @ManyToOne
+    @JoinColumn(name = "member_id")
     private Member owner;
 
     public DayOff() {

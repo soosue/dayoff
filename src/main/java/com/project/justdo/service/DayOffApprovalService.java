@@ -8,8 +8,10 @@ import com.project.justdo.domain.repository.DayOffApprovalRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class DayOffApprovalService {
     private static final Logger logger = LoggerFactory.getLogger(DayOffApprovalService.class);
 
@@ -27,6 +29,7 @@ public class DayOffApprovalService {
         // 맞다면, 진행. 아니면 예외처리.
 
         DayOffApproval dayOffApproval = new DayOffApproval(dayOffApplication, member, state);
+        dayOffApplication.addDayOffApproval(dayOffApproval);
 
 
         return dayOffApprovalRepository.save(dayOffApproval).getId();

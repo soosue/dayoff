@@ -13,4 +13,8 @@ public class Approvers {
     public Approvers(List<Member> approvers) {
         this.approvers = approvers;
     }
+
+    public List<Member> getList() {
+        return approvers;
+    }
 }

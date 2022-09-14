@@ -1,9 +1,18 @@
 spring:
+  h2:
+    console:
+      enabled=true:
   datasource:
     driver-class-name: org.h2.Driver
+#    url: jdbc:h2:mem://localhost/~/java-qna-atdd;DB_CLOSE_ON_EXIT=FALSE
     url: jdbc:h2:tcp://localhost/~/db
     username: sa
     password:
   jpa:
     hibernate:
       ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database-platform: org.hibernate.dialect.H2Dialect

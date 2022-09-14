@@ -1,8 +1,10 @@
 package com.project.justdo.service;
 
 import com.project.justdo.domain.DayOff;
+import com.project.justdo.domain.DayOffApplication;
 import com.project.justdo.domain.Member;
 import com.project.justdo.domain.repository.DayOffApplicationRepository;
+import com.project.justdo.domain.repository.DayOffApprovalRepository;
 import com.project.justdo.domain.repository.DayOffRepository;
 import com.project.justdo.domain.repository.MemberRepository;
 import com.project.justdo.service.dto.DayOffApplicationDto;
@@ -10,12 +12,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
+@Transactional
 class DayOffApplicationServiceTest {
     @Autowired
     private DayOffApplicationService service;
@@ -28,6 +32,9 @@ class DayOffApplicationServiceTest {
 
     @Autowired
     private DayOffRepository dayOffRepository;
+
+    @Autowired
+    private DayOffApprovalRepository dayOffApprovalRepository;
 
     @BeforeEach
     void init() {
@@ -44,12 +51,19 @@ class DayOffApplicationServiceTest {
     @Test
     void 연차신청서_작성() {
         DayOffApplicationDto dto = new DayOffApplicationDto(
-                1L, "2022-09-05", "2022-09-09",
-                List.of(2L, 3L), "010-1234-5678", 4L, "개인 사유로 연차를 신청합니다."
+                memberRepository.findByName("베니스").getId(), "2022-09-05", "2022-09-09",
+                List.of(memberRepository.findByName("아메리").getId(), memberRepository.findByName("케이크").getId()),
+                "010-1234-5678",
+                memberRepository.findByName("아이스").getId(),
+                "개인 사유로 연차를 신청합니다."
         );
 
         Long registeredId = service.registerDayOffApplication(dto);
 
-        assertThat(repository.findById(registeredId)).isPresent();
+        DayOffApplication dayOffApplication = repository.findById(registeredId).get();
+
+        assertThat(dayOffApplication).isNotNull();
+        assertThat(dayOffApplication.getDayOffApprovals().getList()).hasSize(2);
+        System.out.println();
     }
 }
